@@ -10,12 +10,12 @@ describe Oystercard do
       expect(card.balance).to eq(0)
     end
 
-    it "expected to not be in journey" do
-      expect(card).not_to be_in_journey
-    end
-
     it "has no entry station set" do
       expect(card.entry_station).to eq nil
+    end
+
+    it "expected to not be in journey" do
+      expect(card).not_to be_in_journey
     end
 
     it "has no journey history saved" do
@@ -42,25 +42,6 @@ describe Oystercard do
 
   describe "#touch_in" do
 
-    context "when card has sufficient balance" do
-
-      subject(:card){described_class.new}
-      let(:station){ double :station }
-
-      it "can touch in" do
-        card.top_up(1)
-        card.touch_in(station)
-        expect(card).to be_in_journey
-      end
-
-      it "stores entry station" do
-        card.top_up(1)
-        card.touch_in(station)
-        expect(card.entry_station).to eq station
-      end
-
-    end
-
     context "when card has insufficient balance" do
 
       subject(:card){described_class.new}
@@ -86,7 +67,7 @@ describe Oystercard do
         card.top_up(1)
         card.touch_in(entry_station)
         card.touch_out(exit_station)
-        expect(card).not_to be_in_journey
+        expect(card.exit_station).to be exit_station
       end
 
       it "deducts min fare from balance on touch out" do
