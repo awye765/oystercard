@@ -6,7 +6,10 @@ describe Journey do
 
   let(:station){ double :station }
 
-  # describe ""
+  describe
+    it "has no entry station set" do
+      expect(card.entry_station).to eq nil
+    end
 
   describe "#start" do
 
