@@ -30,7 +30,6 @@ class Oystercard
   def touch_out(station)
     deduct(MIN_FARE)
     log_out(station)
-    journey.finish(station)
   end
 
   def log_in(station)
