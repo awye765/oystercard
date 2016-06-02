@@ -1,9 +1,11 @@
+require_relative 'journey'
+
 class Oystercard
 
   MAX_BALANCE = 90
   MIN_FARE = 1
 
-  attr_reader :balance, :journeys
+  attr_reader :balance, :journeys, :journey
 
   def initialize
     @balance = 0
@@ -20,21 +22,23 @@ class Oystercard
   end
 
   def touch_in(station)
+    @journey = Journey.new(station)
     min_balance_error
-    login(station)
+    log_in(station)
   end
 
   def touch_out(station)
     deduct(MIN_FARE)
     log_out(station)
+    journey.finish(station)
   end
 
   def log_in(station)
-    @journeys[:entry_station] = station
+    journeys[:entry_station] = station
   end
 
   def log_out(station)
-    @journeys[:exit_station] = station
+    journeys[:exit_station] = station
   end
 
   def max_balance_error(amount)

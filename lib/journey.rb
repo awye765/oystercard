@@ -1,4 +1,4 @@
-require 'oystercard'
+require_relative 'oystercard'
 
 class Journey
 
@@ -6,16 +6,14 @@ class Journey
 
   attr_reader :entry_station, :exit_station
 
-  # , :journeys
-
   def initialize(entry_station=nil)
     @entry_station = entry_station
-    # @journeys = Hash.new
     @complete = false
   end
 
   def finish(station)
     @exit_station = station
+    @complete = true
     @entry_station = nil
   end
 

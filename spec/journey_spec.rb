@@ -2,28 +2,47 @@ require 'journey'
 
 describe Journey do
 
-  subject(:journey){described_class.new}
+  describe "new journey" do
 
-  let(:station){ double :station }
+    context "when there is NO touch-in" do
 
-  describe
-    it "has no entry station set" do
-      expect(card.entry_station).to eq nil
+      subject(:journey){described_class.new}
+
+      let(:station){ double :station }
+
+      describe "#initialize" do
+
+        it "entry station is nil" do
+           journey()
+           expect(journey.entry_station).to eq nil
+        end
+
+      describe "#finish" do
+
+        it "it records exit station on touch out" do
+          subject(:journey){described_class.new}
+          journey.finish(station)
+          expect(subject.exit_station).to eq station
+        end
+
+      end
+
     end
 
-  describe "#start" do
+    context "when there IS touch-in" do
 
-    it "records entry station on touch in" do
-      journey.start(station)
-      expect(subject.entry_station).to eq station
-    end
-  end
+      subject(:journey){described_class.new(station)}
 
-  describe "#finish" do
+      let(:station){ double :station }
 
-    it "it records exit station on touch out" do
-      journey.finish(station)
-      expect(subject.exit_station).to eq station
+      describe "#initialize" do
+
+        it "records entry station on touch in" do
+          expect(journey.entry_station).to eq station
+        end
+
+      end
+
     end
 
   end

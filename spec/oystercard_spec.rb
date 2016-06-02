@@ -64,12 +64,12 @@ describe Oystercard do
 
     context "processes journey log info" do
 
-      it "forgets entry station" do
-        card.top_up(1)
-        card.touch_in(entry_station)
-        card.touch_out(exit_station)
-        expect(card.entry_station).to eq nil
-      end
+      # it "forgets entry station" do
+      #   card.top_up(1)
+      #   card.touch_in(entry_station)
+      #   card.touch_out(exit_station)
+      #   expect(card.entry_station).to eq nil
+      # end
 
       let(:journey){ {entry_station: entry_station, exit_station: exit_station} }
 
