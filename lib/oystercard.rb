@@ -8,26 +8,41 @@ class Oystercard
   def initialize
     @balance = 0
     @journeys = Hash.new
-    # @entry_station = nil
   end
 
   def in_journey?
-    !!entry_station
+    !!journeys
   end
 
   def top_up(amount)
-    fail "Maximum balance of #{MAX_BALANCE} reached!" if over_limit?(amount)
+    max_balance_error(amount)
     @balance += amount
   end
 
   def touch_in(station)
-    fail "Error: minimum balance less than minimum fare. Top-up!" if @balance < MIN_FARE
-    @journeys[:entry_station] = station
+    min_balance_error
+    login(station)
   end
 
   def touch_out(station)
     deduct(MIN_FARE)
+    log_out(station)
+  end
+
+  def log_in(station)
+    @journeys[:entry_station] = station
+  end
+
+  def log_out(station)
     @journeys[:exit_station] = station
+  end
+
+  def max_balance_error(amount)
+    fail "Maximum balance of #{MAX_BALANCE} reached!" if over_limit?(amount)
+  end
+
+  def min_balance_error
+    fail "Error: minimum balance less than minimum fare. Top-up!" if balance < MIN_FARE
   end
 
   private

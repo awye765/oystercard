@@ -10,8 +10,8 @@ describe Oystercard do
       expect(card.balance).to eq(0)
     end
 
-    it "expected to not be in journey" do
-      expect(card).not_to be_in_journey
+    it "expected to have no stored journeys" do
+      expect(card.journeys).to be_empty
     end
 
     it "has no journey history saved" do
