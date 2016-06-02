@@ -10,7 +10,7 @@ class Oystercard
   def initialize
     @balance = 0
     @journey_log = []
-    @current_journey = Hash.new
+    @current_journey = {}
   end
 
   def in_journey?
@@ -30,6 +30,8 @@ class Oystercard
   def touch_out(station)
     deduct(MIN_FARE)
     finish(station)
+    journey_log_update
+    current_journey_reset
   end
 
   def start(station)
@@ -38,7 +40,14 @@ class Oystercard
 
   def finish(station)
     @current_journey[:exit_station] = station
+  end
+
+  def journey_log_update
     @journey_log << current_journey
+  end
+
+  def current_journey_reset
+    @current_journey = {}
   end
 
   def max_balance_error(amount)

@@ -2,27 +2,31 @@ require "Oystercard"
 
 describe Oystercard do
 
-  context "when new card" do
+  subject(:card) {described_class.new}
+  let(:entry_station){ double :station }
+  let(:exit_station){ double :station }
 
-  subject(:card){described_class.new}
+  describe "#initialize" do
 
-    it "starts with balance of 0" do
-      expect(card.balance).to eq(0)
-    end
+    context "when new card" do
 
-    it "expected to have no stored journeys" do
-      expect(card.journey_log).to be_empty
-    end
+      it "starts with balance of 0" do
+        expect(card.balance).to eq(0)
+      end
 
-    it "has no journey history saved" do
-      expect(card.journey_log).to be_empty
+      it "expected to have no stored journeys" do
+        expect(card.journey_log).to be_empty
+      end
+
+      it "has no journey history saved" do
+        expect(card.journey_log).to be_empty
+      end
+
     end
 
   end
 
   describe "#top_up" do
-
-    subject(:card){described_class.new}
 
     it "can increase balance by specified amount" do
       expect{card.top_up(1)}.to change{card.balance}.by(+1)
@@ -40,11 +44,8 @@ describe Oystercard do
 
     context "when card has insufficient balance" do
 
-      subject(:card){described_class.new}
-      let(:station){ double :station }
-
       it "raises error if card balance below minimum fare value" do
-        expect{ card.touch_in(station) }.to raise_error "Error: minimum balance less than minimum fare. Top-up!"
+        expect{ card.touch_in(entry_station) }.to raise_error "Error: minimum balance less than minimum fare. Top-up!"
       end
 
     end
@@ -52,11 +53,6 @@ describe Oystercard do
   end
 
   describe "#touch_out" do
-
-    subject(:card){described_class.new}
-    let(:entry_station){ double :station }
-    let(:exit_station){ double :station }
-
 
       it "deducts min fare from balance on touch out" do
         expect{card.touch_out(exit_station)}.to change{card.balance}.by(-1)
