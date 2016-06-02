@@ -5,11 +5,12 @@ class Oystercard
   MAX_BALANCE = 90
   MIN_FARE = 1
 
-  attr_reader :balance, :journeys, :journey
+  attr_reader :balance, :journey_log, :current_journey
 
   def initialize
     @balance = 0
-    @journeys = Hash.new
+    @journey_log = []
+    @current_journey = Hash.new
   end
 
   def in_journey?
@@ -22,22 +23,22 @@ class Oystercard
   end
 
   def touch_in(station)
-    @journey = Journey.new(station)
     min_balance_error
-    log_in(station)
+    start(station)
   end
 
   def touch_out(station)
     deduct(MIN_FARE)
-    log_out(station)
+    finish(station)
   end
 
-  def log_in(station)
-    journeys[:entry_station] = station
+  def start(station)
+    @current_journey[:entry_station] = station
   end
 
-  def log_out(station)
-    journeys[:exit_station] = station
+  def finish(station)
+    @current_journey[:exit_station] = station
+    @journey_log << current_journey
   end
 
   def max_balance_error(amount)

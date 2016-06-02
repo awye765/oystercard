@@ -11,11 +11,11 @@ describe Oystercard do
     end
 
     it "expected to have no stored journeys" do
-      expect(card.journeys).to be_empty
+      expect(card.journey_log).to be_empty
     end
 
     it "has no journey history saved" do
-      expect(card.journeys).to be_empty
+      expect(card.journey_log).to be_empty
     end
 
   end
@@ -64,20 +64,13 @@ describe Oystercard do
 
     context "processes journey log info" do
 
-      # it "forgets entry station" do
-      #   card.top_up(1)
-      #   card.touch_in(entry_station)
-      #   card.touch_out(exit_station)
-      #   expect(card.entry_station).to eq nil
-      # end
-
       let(:journey){ {entry_station: entry_station, exit_station: exit_station} }
 
       it "stores a journey" do
         card.top_up(1)
         card.touch_in(entry_station)
         card.touch_out(exit_station)
-        expect(card.journeys).to include journey
+        expect(card.journey_log).to include journey
       end
 
     end
