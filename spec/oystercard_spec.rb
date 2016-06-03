@@ -5,6 +5,7 @@ describe Oystercard do
   subject(:card) {described_class.new}
   let(:entry_station){ double :station }
   let(:exit_station){ double :station }
+  let(:journey){ double :journey}
 
   describe "#initialize" do
 
@@ -39,6 +40,14 @@ describe Oystercard do
       it "raises error if card balance below minimum fare value" do
         expect{ card.touch_in(entry_station) }.to raise_error "Error: minimum balance less than minimum fare. Top-up!"
       end
+
+      it "creates new journey object" do
+        card.top_up(10)
+        card.touch_in(entry_station)
+        expect(card.current_journey).to respond_to :fare
+      end
+
+
 
     end
 
