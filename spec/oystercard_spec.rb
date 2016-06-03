@@ -14,14 +14,6 @@ describe Oystercard do
         expect(card.balance).to eq(0)
       end
 
-      it "expected to have no stored journeys" do
-        expect(card.journey_log).to be_empty
-      end
-
-      it "has no journey history saved" do
-        expect(card.journey_log).to be_empty
-      end
-
     end
 
   end
@@ -57,20 +49,6 @@ describe Oystercard do
       it "deducts min fare from balance on touch out" do
         expect{card.touch_out(exit_station)}.to change{card.balance}.by(-1)
       end
-
-    context "processes journey log info" do
-
-      let(:journey){ {entry_station: entry_station, exit_station: exit_station} }
-
-      it "stores a journey" do
-        card.top_up(1)
-        card.touch_in(entry_station)
-        card.touch_out(exit_station)
-        expect(card.journey_log).to include journey
-      end
-
-    end
-
   end
 
 end

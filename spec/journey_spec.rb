@@ -76,7 +76,7 @@ describe Journey do
     end
 
     context "when no touch in but touch out" do
-      subject(:journey)  {Journey.new(entry_station)}
+      subject(:journey)  {Journey.new()}
 
       it "charges penalty fare" do
         journey.finish(exit_station)
