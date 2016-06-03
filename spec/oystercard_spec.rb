@@ -44,7 +44,7 @@ describe Oystercard do
       it "creates new journey object" do
         card.top_up(10)
         card.touch_in(entry_station)
-        expect(card.current_journey).to respond_to :fare
+        expect(card.journey).to respond_to :fare
       end
 
 
@@ -57,6 +57,13 @@ describe Oystercard do
 
       it "deducts min fare from balance on touch out" do
         expect{card.touch_out(exit_station)}.to change{card.balance}.by(-1)
+      end
+
+      it "tests that touch_out finishes journey" do
+        card.top_up(10)
+        card.touch_in(entry_station)
+        card.touch_out(exit_station)
+        expect(card.journey).to respond_to :finish
       end
   end
 

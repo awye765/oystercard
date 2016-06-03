@@ -5,7 +5,6 @@ class Journey
   PENALTY_FARE = 6
   MIN_FARE = 1
 
-
   attr_reader :current_journey, :complete, :journey_log, :entry_station, :exit_station
 
   def initialize(entry_station=nil)
@@ -20,6 +19,7 @@ class Journey
     journey_log_update
     # current_journey_reset
     @complete = true
+    # self
   end
 
   def current_journey_start(entry_station)
